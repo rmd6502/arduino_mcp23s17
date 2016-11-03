@@ -1,3 +1,8 @@
+#ifndef __MCP23S17_H
+#define __MCP23S17_H
+
+#include "Arduino.h"
+
 // IOCON.BANK=0
 enum MCP_REGISTERS {
   MCP_DDRA,
@@ -67,3 +72,4 @@ class MCP23S17Pin {
 void pinMode(MCP23S17Pin& pin, uint8_t mode);
 void digitalWrite(MCP23S17Pin& pin, uint8_t value);
 uint8_t digitalRead(MCP23S17Pin& pin);
+#endif // __MCP23S17_H

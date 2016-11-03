@@ -1,4 +1,4 @@
-#include "mcp23S17.h"
+#include "MCP23S17.h"
 
 MCP23S17 mcp23s17;
 

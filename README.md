@@ -5,4 +5,4 @@ which is how I tested this library.
 
 ## Example
 Wire the Arduino up to the PiFace as follows (other boards you're on your own):
-![Wiring Diagram](piface+arduino+wiring.pdf)
+![Wiring Diagram](piface%20arduino%20wiring.pdf)

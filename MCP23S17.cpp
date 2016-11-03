@@ -65,15 +65,14 @@ uint8_t MCP23S17::readByte(uint8_t reg) {
   return result;
 }
 
-MCP23S17Pin* MCP23S17::pin(uint8_t pinNumber) {
-  if (pinNumber < 16) {
-    if (pins[pinNumber] == NULL) {
-      pins[pinNumber] = new MCP23S17Pin(this, pinNumber);
-    }
-    return pins[pinNumber];
-  } else {
-    return NULL;
+MCP23S17Pin& MCP23S17::pin(uint8_t pinNumber) {
+  if (pinNumber >= NUM_PINS) {
+    pinNumber = DUMMY_PIN;
   }
+  if (pins[pinNumber] == NULL) {
+    pins[pinNumber] = new MCP23S17Pin(this, pinNumber);
+  }
+  return *pins[pinNumber];
 }
 
   MCP23S17Pin::MCP23S17Pin(MCP23S17 *parent, uint8_t pinNumber) {
@@ -82,6 +81,7 @@ MCP23S17Pin* MCP23S17::pin(uint8_t pinNumber) {
   }
   
   void MCP23S17Pin::setPinMode(uint8_t mode) {
+    if (pin == DUMMY_PIN) return;
     uint8_t modeReg = (pin > 7) ? MCP_DDRB : MCP_DDRA;
     uint8_t pullupReg = (pin > 7) ? MCP_PUB : MCP_PUA;
     uint8_t mask = 1 << (pin & 7);
@@ -101,6 +101,7 @@ MCP23S17Pin* MCP23S17::pin(uint8_t pinNumber) {
     parent->sendByte(pullupReg, puVal);
   }
   void MCP23S17Pin::writePin(uint8_t value) {
+    if (pin == DUMMY_PIN) return;
     uint8_t gpioReg = (pin > 7) ? MCP_GPIOB : MCP_GPIOA;
     uint8_t mask = 1 << (pin & 7);
     uint8_t val = parent->readByte(gpioReg);
@@ -114,6 +115,7 @@ MCP23S17Pin* MCP23S17::pin(uint8_t pinNumber) {
   }
   
   uint8_t MCP23S17Pin::readPin() {
+    if (pin == DUMMY_PIN) return 255;
     uint8_t gpioReg = (pin > 7) ? MCP_GPIOB : MCP_GPIOA;
     uint8_t mask = 1 << (pin & 7);
     uint8_t val = parent->readByte(gpioReg) & mask;

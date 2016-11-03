@@ -29,6 +29,10 @@ enum MCP_REGISTERS {
   MCP_OLATB
 };
 
+const uint8_t NUM_PINS = 16;
+// pin number for invalid pins
+const uint8_t DUMMY_PIN = NUM_PINS;
+
 class MCP23S17Pin;
 
 class MCP23S17 {
@@ -48,12 +52,12 @@ class MCP23S17 {
     uint8_t readByte(uint8_t reg);
 
     // Will return NULL for invalid pin - check before using one of the functions below!
-    MCP23S17Pin *pin(uint8_t pinNumber);
+    MCP23S17Pin &pin(uint8_t pinNumber);
 
   private:
     uint8_t address;
     uint8_t spics;
-    MCP23S17Pin *pins[16];
+    MCP23S17Pin *pins[NUM_PINS + 1];
 };
 
 class MCP23S17Pin {

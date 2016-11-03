@@ -34,7 +34,9 @@ void loop() {
     }
   }
   digitalWrite(mcp23s17.pin(2), HIGH);
+  delay(500);
   
   digitalWrite(mcp23s17.pin(2), LOW);
+  delay(500);
   
 }

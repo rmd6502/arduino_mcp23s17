@@ -73,7 +73,11 @@ class MCP23S17Pin {
     uint8_t readPin();
 };
 
+// Overloads of existing Arduino functions for convenience
 void pinMode(MCP23S17Pin& pin, uint8_t mode);
 void digitalWrite(MCP23S17Pin& pin, uint8_t value);
 uint8_t digitalRead(MCP23S17Pin& pin);
+uint8_t shiftIn(MCP23S17Pin& dataPin, MCP23S17Pin& clockPin, uint8_t bitOrder);
+void shiftOut(MCP23S17Pin& dataPin, MCP23S17Pin& clockPin, uint8_t bitOrder, uint8_t val);
+
 #endif // __MCP23S17_H
